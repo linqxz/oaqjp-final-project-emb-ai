@@ -66,6 +66,17 @@ natural_language_understanding.set_service_url(service_url)
 
 def emotion_detector(text_to_analyze):
     try:
+        # Check if the input is blank or contains only whitespace
+        if not text_to_analyze or text_to_analyze.strip() == "":
+            return {
+                "anger": None,
+                "disgust": None,
+                "fear": None,
+                "joy": None,
+                "sadness": None,
+                "dominant_emotion": None
+            }
+
         response = natural_language_understanding.analyze(
             text=text_to_analyze,
             features={"emotion": {}}
@@ -84,13 +95,31 @@ def emotion_detector(text_to_analyze):
                 "dominant_emotion": dominant_emotion
             }
         else:
-            return None
+            return {
+                "anger": None,
+                "disgust": None,
+                "fear": None,
+                "joy": None,
+                "sadness": None,
+                "dominant_emotion": None
+            }
 
     except Exception as e:
         print(f"An error occurred: {str(e)}")
         return None
 
+
 # Example usage
+"""
 text_to_analyze = "I am feeling very happy today!"
 result = emotion_detector(text_to_analyze)
+print("input string - \n"+text_to_analyze)
+print("output string - ")
 print(result)
+
+sample_text = "I love this new technology!"
+sample_result = emotion_detector(sample_text)
+print("input string - \n"+sample_text)
+print("output string - ")
+print(sample_result)
+"""
